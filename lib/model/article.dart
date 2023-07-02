@@ -11,20 +11,20 @@ class Article extends APIManager {
   final String created_at;
   final int likes_count;
   final String title;
-  // final User user;
-  // final List<Tags> tags;
+  final User user;
+  final List<Tags> tags;
   final String url;
   final String id;
 
-  Article(this.created_at, this.likes_count, this.title, /*this.user, this.tags,*/
+  Article(this.created_at, this.likes_count, this.title, this.user, this.tags,
       this.url, this.id);
 
   Article.fromJson(Map<String, dynamic> json)
       : created_at = json['created_at'],
         likes_count = json['likes_count'],
         title = json['title'],
-        // user = json['user'],
-        // tags = json['tags'],
+        user = User.fromJson(json['user']),
+        tags = List<Tags>.from(json['tags'].map((tag) => Tags.fromJson(tag))),
         url = json['url'],
         id = json['id'];
 
@@ -32,8 +32,8 @@ class Article extends APIManager {
         'created_at': created_at,
         'likes_count': likes_count,
         'title': title,
-        // 'user': user,
-        // 'tags': tags,
+        'user': user,
+        'tags': tags,
         'url': url,
         'id': id,
       };

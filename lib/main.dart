@@ -52,9 +52,21 @@ class MyHomePage extends ConsumerWidget {
           return ListView.builder(
             itemCount: articles.length,
             itemBuilder: (BuildContext context, int index) {
-              final note = articles[index] as Article;
-              return ListTile(
-                title: Text(note.title),
+              final article = articles[index] as Article;
+              return Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(children: [
+                  Row(
+                    children: [
+                      Text('@${article.user.id}'),
+                      Text(article.user.organization ?? ""),
+                    ],
+                  ),
+                  Text(article.created_at),
+                  Text(
+                    article.title,
+                  )
+                ]),
               );
             },
           );

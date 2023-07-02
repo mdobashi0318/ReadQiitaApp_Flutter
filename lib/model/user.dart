@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:ffi';
+
 
 class User {
   final String? description;
@@ -16,7 +16,7 @@ class User {
   final String? organization;
   final int permanent_id;
   final String? profile_image_url;
-  final Bool team_only;
+  final bool team_only;
   final String? twitter_screen_name;
   final String? website_url;
 

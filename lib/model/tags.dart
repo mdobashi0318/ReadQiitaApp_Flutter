@@ -6,7 +6,7 @@ class Tags {
 
   Tags.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        versions = json['versions'];
+        versions = List<String>.from(json['versions'].map((version) => Tags.fromJson(version)));
 
   Map<String, dynamic> toJson() => {
         'name': name,
