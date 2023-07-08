@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_qiita_app_flutter/model/article.dart';
 
+import 'article_detail_screen.dart';
 import 'article_list_notifier.dart';
 import 'model/tags.dart';
 
@@ -56,54 +57,67 @@ class MyHomePage extends ConsumerWidget {
             itemCount: articles.length,
             itemBuilder: (BuildContext context, int index) {
               final article = articles[index] as Article;
-              return Container(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text('@${article.user.id}'),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(child: Text(article.user.organization ?? "")),
-                      ],
-                    ),
-                    Text(
-                      article.created_at,
-                    ),
-                    Text(
-                      article.title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Transform.rotate(
-                          angle: 220 * pi / 180,
-                          child: const Icon(
-                            Icons.label,
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  print("object: ${article.title}");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ArticleDetailScreen(id: article.id,title: article.title,url: article.url,)),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('@${article.user.id}'),
+                          const SizedBox(
+                            width: 10,
                           ),
+                          Flexible(
+                              child: Text(article.user.organization ?? "")),
+                        ],
+                      ),
+                      Text(
+                        article.created_at,
+                      ),
+                      Text(
+                        article.title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Flexible(child: Text(tagNames(article.tags).join(','))),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Icon(Icons.favorite_border),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(article.likes_count.toString())
-                      ],
-                    )
-                  ],
+                      ),
+                      Row(
+                        children: [
+                          Transform.rotate(
+                            angle: 220 * pi / 180,
+                            child: const Icon(
+                              Icons.label,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Flexible(
+                              child: Text(tagNames(article.tags).join(','))),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.favorite_border),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(article.likes_count.toString())
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               );
             },
